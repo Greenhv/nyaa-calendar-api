@@ -1,33 +1,16 @@
-const { GraphQLServer } = require('graphql-yoga')
-const { prisma } = require('./generated/prisma-client')
+import ApolloClient from 'apollo-boost';
+import 'cross-fetch/polyfill';
+import { GraphQLServer } from 'graphql-yoga';
+import { prisma } from './generated/prisma-client'
+import { getAnimeList } from './helper';
+
+const client = new ApolloClient({ uri: 'https://graphql.anilist.co' });
 
 const resolvers = {
   Query: {
-    feed: (parent, args, context) => {
-      return context.prisma.posts({ where: { published: true } })
-    },
-    drafts: (parent, args, context) => {
-      return context.prisma.posts({ where: { published: false } })
-    },
-    post: (parent, { id }, context) => {
-      return context.prisma.post({ id })
-    },
-  },
-  Mutation: {
-    createDraft(parent, { title, content }, context) {
-      return context.prisma.createPost({
-        title,
-        content,
-      })
-    },
-    deletePost(parent, { id }, context) {
-      return context.prisma.deletePost({ id })
-    },
-    publish(parent, { id }, context) {
-      return context.prisma.updatePost({
-        where: { id },
-        data: { published: true },
-      })
+    animes: async (parent, { currentDate }, context) => {
+			await getAnimeList({ apolloClient: client, currentDate, context });
+      return [];
     },
   },
 }
@@ -38,6 +21,7 @@ const server = new GraphQLServer({
   context: {
     prisma,
   },
-})
+});
+
 
 server.start(() => console.log('Server is running on http://localhost:4000'))

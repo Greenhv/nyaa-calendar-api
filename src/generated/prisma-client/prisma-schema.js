@@ -3,8 +3,150 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregatePost {
+/* GraphQL */ `type AggregateAnime {
   count: Int!
+}
+
+type Anime {
+  id: ID!
+  slug: String!
+  published: Boolean!
+  title: String!
+  episode: Int!
+}
+
+type AnimeConnection {
+  pageInfo: PageInfo!
+  edges: [AnimeEdge]!
+  aggregate: AggregateAnime!
+}
+
+input AnimeCreateInput {
+  id: ID
+  slug: String!
+  published: Boolean
+  title: String!
+  episode: Int!
+}
+
+type AnimeEdge {
+  node: Anime!
+  cursor: String!
+}
+
+enum AnimeOrderByInput {
+  id_ASC
+  id_DESC
+  slug_ASC
+  slug_DESC
+  published_ASC
+  published_DESC
+  title_ASC
+  title_DESC
+  episode_ASC
+  episode_DESC
+}
+
+type AnimePreviousValues {
+  id: ID!
+  slug: String!
+  published: Boolean!
+  title: String!
+  episode: Int!
+}
+
+type AnimeSubscriptionPayload {
+  mutation: MutationType!
+  node: Anime
+  updatedFields: [String!]
+  previousValues: AnimePreviousValues
+}
+
+input AnimeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: AnimeWhereInput
+  AND: [AnimeSubscriptionWhereInput!]
+  OR: [AnimeSubscriptionWhereInput!]
+  NOT: [AnimeSubscriptionWhereInput!]
+}
+
+input AnimeUpdateInput {
+  slug: String
+  published: Boolean
+  title: String
+  episode: Int
+}
+
+input AnimeUpdateManyMutationInput {
+  slug: String
+  published: Boolean
+  title: String
+  episode: Int
+}
+
+input AnimeWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  slug: String
+  slug_not: String
+  slug_in: [String!]
+  slug_not_in: [String!]
+  slug_lt: String
+  slug_lte: String
+  slug_gt: String
+  slug_gte: String
+  slug_contains: String
+  slug_not_contains: String
+  slug_starts_with: String
+  slug_not_starts_with: String
+  slug_ends_with: String
+  slug_not_ends_with: String
+  published: Boolean
+  published_not: Boolean
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  episode: Int
+  episode_not: Int
+  episode_in: [Int!]
+  episode_not_in: [Int!]
+  episode_lt: Int
+  episode_lte: Int
+  episode_gt: Int
+  episode_gte: Int
+  AND: [AnimeWhereInput!]
+  OR: [AnimeWhereInput!]
+  NOT: [AnimeWhereInput!]
+}
+
+input AnimeWhereUniqueInput {
+  id: ID
 }
 
 type BatchPayload {
@@ -14,12 +156,12 @@ type BatchPayload {
 scalar Long
 
 type Mutation {
-  createPost(data: PostCreateInput!): Post!
-  updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
-  updateManyPosts(data: PostUpdateManyMutationInput!, where: PostWhereInput): BatchPayload!
-  upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
-  deletePost(where: PostWhereUniqueInput!): Post
-  deleteManyPosts(where: PostWhereInput): BatchPayload!
+  createAnime(data: AnimeCreateInput!): Anime!
+  updateAnime(data: AnimeUpdateInput!, where: AnimeWhereUniqueInput!): Anime
+  updateManyAnimes(data: AnimeUpdateManyMutationInput!, where: AnimeWhereInput): BatchPayload!
+  upsertAnime(where: AnimeWhereUniqueInput!, create: AnimeCreateInput!, update: AnimeUpdateInput!): Anime!
+  deleteAnime(where: AnimeWhereUniqueInput!): Anime
+  deleteManyAnimes(where: AnimeWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -39,142 +181,15 @@ type PageInfo {
   endCursor: String
 }
 
-type Post {
-  id: ID!
-  published: Boolean!
-  title: String!
-  content: String!
-}
-
-type PostConnection {
-  pageInfo: PageInfo!
-  edges: [PostEdge]!
-  aggregate: AggregatePost!
-}
-
-input PostCreateInput {
-  id: ID
-  published: Boolean
-  title: String!
-  content: String!
-}
-
-type PostEdge {
-  node: Post!
-  cursor: String!
-}
-
-enum PostOrderByInput {
-  id_ASC
-  id_DESC
-  published_ASC
-  published_DESC
-  title_ASC
-  title_DESC
-  content_ASC
-  content_DESC
-}
-
-type PostPreviousValues {
-  id: ID!
-  published: Boolean!
-  title: String!
-  content: String!
-}
-
-type PostSubscriptionPayload {
-  mutation: MutationType!
-  node: Post
-  updatedFields: [String!]
-  previousValues: PostPreviousValues
-}
-
-input PostSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: PostWhereInput
-  AND: [PostSubscriptionWhereInput!]
-  OR: [PostSubscriptionWhereInput!]
-  NOT: [PostSubscriptionWhereInput!]
-}
-
-input PostUpdateInput {
-  published: Boolean
-  title: String
-  content: String
-}
-
-input PostUpdateManyMutationInput {
-  published: Boolean
-  title: String
-  content: String
-}
-
-input PostWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  published: Boolean
-  published_not: Boolean
-  title: String
-  title_not: String
-  title_in: [String!]
-  title_not_in: [String!]
-  title_lt: String
-  title_lte: String
-  title_gt: String
-  title_gte: String
-  title_contains: String
-  title_not_contains: String
-  title_starts_with: String
-  title_not_starts_with: String
-  title_ends_with: String
-  title_not_ends_with: String
-  content: String
-  content_not: String
-  content_in: [String!]
-  content_not_in: [String!]
-  content_lt: String
-  content_lte: String
-  content_gt: String
-  content_gte: String
-  content_contains: String
-  content_not_contains: String
-  content_starts_with: String
-  content_not_starts_with: String
-  content_ends_with: String
-  content_not_ends_with: String
-  AND: [PostWhereInput!]
-  OR: [PostWhereInput!]
-  NOT: [PostWhereInput!]
-}
-
-input PostWhereUniqueInput {
-  id: ID
-}
-
 type Query {
-  post(where: PostWhereUniqueInput!): Post
-  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
-  postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
+  anime(where: AnimeWhereUniqueInput!): Anime
+  animes(where: AnimeWhereInput, orderBy: AnimeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Anime]!
+  animesConnection(where: AnimeWhereInput, orderBy: AnimeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AnimeConnection!
   node(id: ID!): Node
 }
 
 type Subscription {
-  post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
+  anime(where: AnimeSubscriptionWhereInput): AnimeSubscriptionPayload
 }
 `
       }

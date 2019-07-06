@@ -1,18 +1,15 @@
 type Query {
-  feed: [Post!]!
-  drafts: [Post!]!
-  post(id: ID!): Post
+  animes(currentDate: String!): [Anime]
 }
 
-type Mutation {
-  createDraft(title: String!, content: String): Post
-  deletePost(id: ID!): Post
-  publish(id: ID!): Post
-}
-
-type Post {
+type Anime {
   id: ID!
+  slug: String!
   published: Boolean!
   title: String!
-  content: String!
+  episode: Int!
+  imageURI: String!
+  genres: [String]!
+  studios: [String]!
+  description: String
 }

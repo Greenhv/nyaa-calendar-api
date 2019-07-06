@@ -16,7 +16,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
-  post: (where?: PostWhereInput) => Promise<boolean>;
+  anime: (where?: AnimeWhereInput) => Promise<boolean>;
 }
 
 export interface Node {}
@@ -38,47 +38,47 @@ export interface Prisma {
    * Queries
    */
 
-  post: (where: PostWhereUniqueInput) => PostNullablePromise;
-  posts: (args?: {
-    where?: PostWhereInput;
-    orderBy?: PostOrderByInput;
+  anime: (where: AnimeWhereUniqueInput) => AnimeNullablePromise;
+  animes: (args?: {
+    where?: AnimeWhereInput;
+    orderBy?: AnimeOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => FragmentableArray<Post>;
-  postsConnection: (args?: {
-    where?: PostWhereInput;
-    orderBy?: PostOrderByInput;
+  }) => FragmentableArray<Anime>;
+  animesConnection: (args?: {
+    where?: AnimeWhereInput;
+    orderBy?: AnimeOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => PostConnectionPromise;
+  }) => AnimeConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
    * Mutations
    */
 
-  createPost: (data: PostCreateInput) => PostPromise;
-  updatePost: (args: {
-    data: PostUpdateInput;
-    where: PostWhereUniqueInput;
-  }) => PostPromise;
-  updateManyPosts: (args: {
-    data: PostUpdateManyMutationInput;
-    where?: PostWhereInput;
+  createAnime: (data: AnimeCreateInput) => AnimePromise;
+  updateAnime: (args: {
+    data: AnimeUpdateInput;
+    where: AnimeWhereUniqueInput;
+  }) => AnimePromise;
+  updateManyAnimes: (args: {
+    data: AnimeUpdateManyMutationInput;
+    where?: AnimeWhereInput;
   }) => BatchPayloadPromise;
-  upsertPost: (args: {
-    where: PostWhereUniqueInput;
-    create: PostCreateInput;
-    update: PostUpdateInput;
-  }) => PostPromise;
-  deletePost: (where: PostWhereUniqueInput) => PostPromise;
-  deleteManyPosts: (where?: PostWhereInput) => BatchPayloadPromise;
+  upsertAnime: (args: {
+    where: AnimeWhereUniqueInput;
+    create: AnimeCreateInput;
+    update: AnimeUpdateInput;
+  }) => AnimePromise;
+  deleteAnime: (where: AnimeWhereUniqueInput) => AnimePromise;
+  deleteManyAnimes: (where?: AnimeWhereInput) => BatchPayloadPromise;
 
   /**
    * Subscriptions
@@ -88,9 +88,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
-  post: (
-    where?: PostSubscriptionWhereInput
-  ) => PostSubscriptionPayloadSubscription;
+  anime: (
+    where?: AnimeSubscriptionWhereInput
+  ) => AnimeSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -101,32 +101,29 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type PostOrderByInput =
+export type AnimeOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "slug_ASC"
+  | "slug_DESC"
   | "published_ASC"
   | "published_DESC"
   | "title_ASC"
   | "title_DESC"
-  | "content_ASC"
-  | "content_DESC";
+  | "episode_ASC"
+  | "episode_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface PostCreateInput {
+export interface AnimeCreateInput {
   id?: Maybe<ID_Input>;
+  slug: String;
   published?: Maybe<Boolean>;
   title: String;
-  content: String;
+  episode: Int;
 }
 
-export interface PostUpdateInput {
-  published?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  content?: Maybe<String>;
-}
-
-export interface PostWhereInput {
+export interface AnimeWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -141,6 +138,20 @@ export interface PostWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  slug?: Maybe<String>;
+  slug_not?: Maybe<String>;
+  slug_in?: Maybe<String[] | String>;
+  slug_not_in?: Maybe<String[] | String>;
+  slug_lt?: Maybe<String>;
+  slug_lte?: Maybe<String>;
+  slug_gt?: Maybe<String>;
+  slug_gte?: Maybe<String>;
+  slug_contains?: Maybe<String>;
+  slug_not_contains?: Maybe<String>;
+  slug_starts_with?: Maybe<String>;
+  slug_not_starts_with?: Maybe<String>;
+  slug_ends_with?: Maybe<String>;
+  slug_not_ends_with?: Maybe<String>;
   published?: Maybe<Boolean>;
   published_not?: Maybe<Boolean>;
   title?: Maybe<String>;
@@ -157,43 +168,45 @@ export interface PostWhereInput {
   title_not_starts_with?: Maybe<String>;
   title_ends_with?: Maybe<String>;
   title_not_ends_with?: Maybe<String>;
-  content?: Maybe<String>;
-  content_not?: Maybe<String>;
-  content_in?: Maybe<String[] | String>;
-  content_not_in?: Maybe<String[] | String>;
-  content_lt?: Maybe<String>;
-  content_lte?: Maybe<String>;
-  content_gt?: Maybe<String>;
-  content_gte?: Maybe<String>;
-  content_contains?: Maybe<String>;
-  content_not_contains?: Maybe<String>;
-  content_starts_with?: Maybe<String>;
-  content_not_starts_with?: Maybe<String>;
-  content_ends_with?: Maybe<String>;
-  content_not_ends_with?: Maybe<String>;
-  AND?: Maybe<PostWhereInput[] | PostWhereInput>;
-  OR?: Maybe<PostWhereInput[] | PostWhereInput>;
-  NOT?: Maybe<PostWhereInput[] | PostWhereInput>;
+  episode?: Maybe<Int>;
+  episode_not?: Maybe<Int>;
+  episode_in?: Maybe<Int[] | Int>;
+  episode_not_in?: Maybe<Int[] | Int>;
+  episode_lt?: Maybe<Int>;
+  episode_lte?: Maybe<Int>;
+  episode_gt?: Maybe<Int>;
+  episode_gte?: Maybe<Int>;
+  AND?: Maybe<AnimeWhereInput[] | AnimeWhereInput>;
+  OR?: Maybe<AnimeWhereInput[] | AnimeWhereInput>;
+  NOT?: Maybe<AnimeWhereInput[] | AnimeWhereInput>;
 }
 
-export interface PostUpdateManyMutationInput {
+export interface AnimeUpdateInput {
+  slug?: Maybe<String>;
   published?: Maybe<Boolean>;
   title?: Maybe<String>;
-  content?: Maybe<String>;
+  episode?: Maybe<Int>;
 }
 
-export interface PostSubscriptionWhereInput {
+export interface AnimeUpdateManyMutationInput {
+  slug?: Maybe<String>;
+  published?: Maybe<Boolean>;
+  title?: Maybe<String>;
+  episode?: Maybe<Int>;
+}
+
+export interface AnimeSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<PostWhereInput>;
-  AND?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
-  OR?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
-  NOT?: Maybe<PostSubscriptionWhereInput[] | PostSubscriptionWhereInput>;
+  node?: Maybe<AnimeWhereInput>;
+  AND?: Maybe<AnimeSubscriptionWhereInput[] | AnimeSubscriptionWhereInput>;
+  OR?: Maybe<AnimeSubscriptionWhereInput[] | AnimeSubscriptionWhereInput>;
+  NOT?: Maybe<AnimeSubscriptionWhereInput[] | AnimeSubscriptionWhereInput>;
 }
 
-export type PostWhereUniqueInput = AtLeastOne<{
+export type AnimeWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
@@ -201,18 +214,18 @@ export interface NodeNode {
   id: ID_Output;
 }
 
-export interface AggregatePost {
+export interface AggregateAnime {
   count: Int;
 }
 
-export interface AggregatePostPromise
-  extends Promise<AggregatePost>,
+export interface AggregateAnimePromise
+  extends Promise<AggregateAnime>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregatePostSubscription
-  extends Promise<AsyncIterator<AggregatePost>>,
+export interface AggregateAnimeSubscription
+  extends Promise<AsyncIterator<AggregateAnime>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -233,124 +246,131 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
-export interface PostPreviousValues {
+export interface AnimePreviousValues {
   id: ID_Output;
+  slug: String;
   published: Boolean;
   title: String;
-  content: String;
+  episode: Int;
 }
 
-export interface PostPreviousValuesPromise
-  extends Promise<PostPreviousValues>,
+export interface AnimePreviousValuesPromise
+  extends Promise<AnimePreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  slug: () => Promise<String>;
   published: () => Promise<Boolean>;
   title: () => Promise<String>;
-  content: () => Promise<String>;
+  episode: () => Promise<Int>;
 }
 
-export interface PostPreviousValuesSubscription
-  extends Promise<AsyncIterator<PostPreviousValues>>,
+export interface AnimePreviousValuesSubscription
+  extends Promise<AsyncIterator<AnimePreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  slug: () => Promise<AsyncIterator<String>>;
   published: () => Promise<AsyncIterator<Boolean>>;
   title: () => Promise<AsyncIterator<String>>;
-  content: () => Promise<AsyncIterator<String>>;
+  episode: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface PostEdge {
-  node: Post;
+export interface AnimeEdge {
+  node: Anime;
   cursor: String;
 }
 
-export interface PostEdgePromise extends Promise<PostEdge>, Fragmentable {
-  node: <T = PostPromise>() => T;
+export interface AnimeEdgePromise extends Promise<AnimeEdge>, Fragmentable {
+  node: <T = AnimePromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface PostEdgeSubscription
-  extends Promise<AsyncIterator<PostEdge>>,
+export interface AnimeEdgeSubscription
+  extends Promise<AsyncIterator<AnimeEdge>>,
     Fragmentable {
-  node: <T = PostSubscription>() => T;
+  node: <T = AnimeSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface PostSubscriptionPayload {
+export interface AnimeSubscriptionPayload {
   mutation: MutationType;
-  node: Post;
+  node: Anime;
   updatedFields: String[];
-  previousValues: PostPreviousValues;
+  previousValues: AnimePreviousValues;
 }
 
-export interface PostSubscriptionPayloadPromise
-  extends Promise<PostSubscriptionPayload>,
+export interface AnimeSubscriptionPayloadPromise
+  extends Promise<AnimeSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = PostPromise>() => T;
+  node: <T = AnimePromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = PostPreviousValuesPromise>() => T;
+  previousValues: <T = AnimePreviousValuesPromise>() => T;
 }
 
-export interface PostSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<PostSubscriptionPayload>>,
+export interface AnimeSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<AnimeSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = PostSubscription>() => T;
+  node: <T = AnimeSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = PostPreviousValuesSubscription>() => T;
+  previousValues: <T = AnimePreviousValuesSubscription>() => T;
 }
 
-export interface Post {
+export interface Anime {
   id: ID_Output;
+  slug: String;
   published: Boolean;
   title: String;
-  content: String;
+  episode: Int;
 }
 
-export interface PostPromise extends Promise<Post>, Fragmentable {
+export interface AnimePromise extends Promise<Anime>, Fragmentable {
   id: () => Promise<ID_Output>;
+  slug: () => Promise<String>;
   published: () => Promise<Boolean>;
   title: () => Promise<String>;
-  content: () => Promise<String>;
+  episode: () => Promise<Int>;
 }
 
-export interface PostSubscription
-  extends Promise<AsyncIterator<Post>>,
+export interface AnimeSubscription
+  extends Promise<AsyncIterator<Anime>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  slug: () => Promise<AsyncIterator<String>>;
   published: () => Promise<AsyncIterator<Boolean>>;
   title: () => Promise<AsyncIterator<String>>;
-  content: () => Promise<AsyncIterator<String>>;
+  episode: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface PostNullablePromise
-  extends Promise<Post | null>,
+export interface AnimeNullablePromise
+  extends Promise<Anime | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  slug: () => Promise<String>;
   published: () => Promise<Boolean>;
   title: () => Promise<String>;
-  content: () => Promise<String>;
+  episode: () => Promise<Int>;
 }
 
-export interface PostConnection {
+export interface AnimeConnection {
   pageInfo: PageInfo;
-  edges: PostEdge[];
+  edges: AnimeEdge[];
 }
 
-export interface PostConnectionPromise
-  extends Promise<PostConnection>,
+export interface AnimeConnectionPromise
+  extends Promise<AnimeConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<PostEdge>>() => T;
-  aggregate: <T = AggregatePostPromise>() => T;
+  edges: <T = FragmentableArray<AnimeEdge>>() => T;
+  aggregate: <T = AggregateAnimePromise>() => T;
 }
 
-export interface PostConnectionSubscription
-  extends Promise<AsyncIterator<PostConnection>>,
+export interface AnimeConnectionSubscription
+  extends Promise<AsyncIterator<AnimeConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<PostEdgeSubscription>>>() => T;
-  aggregate: <T = AggregatePostSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<AnimeEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateAnimeSubscription>() => T;
 }
 
 export interface PageInfo {
@@ -377,9 +397,9 @@ export interface PageInfoSubscription
 }
 
 /*
-The `Boolean` scalar type represents `true` or `false`.
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
-export type Boolean = boolean;
+export type String = string;
 
 export type Long = string;
 
@@ -390,9 +410,9 @@ export type ID_Input = string | number;
 export type ID_Output = string;
 
 /*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+The `Boolean` scalar type represents `true` or `false`.
 */
-export type String = string;
+export type Boolean = boolean;
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
@@ -405,7 +425,7 @@ export type Int = number;
 
 export const models: Model[] = [
   {
-    name: "Post",
+    name: "Anime",
     embedded: false
   }
 ];

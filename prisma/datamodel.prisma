@@ -1,6 +1,7 @@
-type Post {
+type Anime {
   id: ID! @id
+  slug: String!
   published: Boolean! @default(value: false)
   title: String!
-  content: String!
+  episode: Int!
 }
