@@ -9,8 +9,7 @@ const client = new ApolloClient({ uri: 'https://graphql.anilist.co' });
 const resolvers = {
   Query: {
     animes: async (parent, { currentDate }, context) => {
-			await getAnimeList({ apolloClient: client, currentDate, context });
-      return [];
+			return await getAnimeList({ apolloClient: client, currentDate, context });
     },
   },
 }

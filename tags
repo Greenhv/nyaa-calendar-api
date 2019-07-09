@@ -189,7 +189,7 @@ nyaapi	package.json	/^    "nyaapi": "^2.0.7",$/;"	s	object:dependencies
 pageInfo	src/generated/prisma-client/index.d.ts	/^  pageInfo: <T = PageInfoPromise>() => T;$/;"	p	interface:AnimeConnectionPromise
 pageInfo	src/generated/prisma-client/index.d.ts	/^  pageInfo: <T = PageInfoSubscription>() => T;$/;"	p	interface:AnimeConnectionSubscription
 pageInfo	src/generated/prisma-client/index.d.ts	/^  pageInfo: PageInfo;$/;"	p	interface:AnimeConnection
-parseAnimes	src/helper.js	/^		const parseAnimes = animes.data.Page.airingSchedules.map(({ episode, media: anime }) => ({$/;"	C
+parseAnimes	src/helper.js	/^		const parseAnimes = await Promise.all(animes.data.Page.airingSchedules.map(async ({ episode, m/;"	C
 parseStudios	src/helper.js	/^const parseStudios = rawStudios => rawStudios.edges.map(({ node }) => node.name);$/;"	C
 previousValues	src/generated/prisma-client/index.d.ts	/^  previousValues: <T = AnimePreviousValuesPromise>() => T;$/;"	p	interface:AnimeSubscriptionPayloadPromise
 previousValues	src/generated/prisma-client/index.d.ts	/^  previousValues: <T = AnimePreviousValuesSubscription>() => T;$/;"	p	interface:AnimeSubscriptionPayloadSubscription
@@ -214,7 +214,7 @@ published	src/generated/prisma-client/index.d.ts	/^  published?: Maybe<Boolean>;
 published_not	src/generated/prisma-client/index.d.ts	/^  published_not?: Maybe<Boolean>;$/;"	p	interface:AnimeWhereInput
 resolvers	src/index.js	/^const resolvers = {$/;"	c
 scripts	package.json	/^  "scripts": {$/;"	o
-searchResult	src/helper.js	/^	const searchResult = await si.seach(fullTitle, 1, { category: '1_2' });$/;"	C
+searchResult	src/helper.js	/^		const searchResult = await pantsu.search(fullTitle, 1, { category: '1_2' });$/;"	C
 server	src/index.js	/^const server = new GraphQLServer({$/;"	C
 slug	src/generated/prisma-client/index.d.ts	/^  slug: () => Promise<AsyncIterator<String>>;$/;"	p	interface:AnimePreviousValuesSubscription
 slug	src/generated/prisma-client/index.d.ts	/^  slug: () => Promise<AsyncIterator<String>>;$/;"	p	interface:AnimeSubscription
