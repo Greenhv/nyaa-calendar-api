@@ -1,5 +1,5 @@
 type Query {
-  animes(currentDate: String!): [Anime]
+  animes(startDay: Float!, endDay: Float!): [Anime]
 }
 
 type Anime {
@@ -12,4 +12,5 @@ type Anime {
   genres: [String]!
   studios: [String]!
   description: String
+  airingAt: Float
 }

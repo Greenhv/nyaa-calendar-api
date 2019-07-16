@@ -8,8 +8,8 @@ const client = new ApolloClient({ uri: 'https://graphql.anilist.co' });
 
 const resolvers = {
   Query: {
-    animes: async (parent, { currentDate }, context) => {
-			return await getAnimeList({ apolloClient: client, currentDate, context });
+    animes: async (parent, { startDay, endDay }, context) => {
+			return await getAnimeList({ apolloClient: client, startDay, endDay, context });
     },
   },
 }

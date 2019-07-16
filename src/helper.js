@@ -1,11 +1,12 @@
 import { si, pantsu } from 'nyaapi';
 import parse from 'date-fns/parse';
+import format from 'date-fns/format';
 import addDays from 'date-fns/addDays';
 import { animesQuery } from './animesQuery';
 
 export const getNyaaAvailability = async fullTitle => {
 	try {
-		const searchResult = await pantsu.search(fullTitle, 1, { category: '1_2' });
+		const searchResult = await pantsu.search(fullTitle, 1, { c: '3_5' });
 
 		return searchResult.length > 0;
 	} catch (e) {
@@ -17,21 +18,21 @@ const transformTitle = title => title.split(' ').map(word => word.toLowerCase())
 
 const parseStudios = rawStudios => rawStudios.edges.map(({ node }) => node.name);
 
-export const getAnimeList = async ({ apolloClient, currentDate, context: { prisma } }) => {
+export const getAnimeList = async ({ apolloClient, startDay, endDay, context: { prisma } }) => {
 	try {
-		const currentDay = parse(currentDate, 'dd-MM-yyyy', new Date());
-		const nextDay = addDays(currentDay, 1);
 		const animes = await apolloClient.query({
 			query: animesQuery,
 			variables: {
 				page: 1,
 				perPage: 50,
-				weekStart: currentDay.getTime() / 1000,
-				weekEnd: nextDay.getTime() / 1000,
+				weekStart: startDay,
+				weekEnd: endDay,
 			},
 		});
-		const parseAnimes = await Promise.all(animes.data.Page.airingSchedules.map(async ({ episode, media: anime }) => ({
+		console.log(startDay, endDay);
+		const parseAnimes = await Promise.all(animes.data.Page.airingSchedules.map(async ({ episode, airingAt, media: anime }) => ({
 			episode,
+			airingAt,
 			title: anime.title.userPreferred,
 			slug: `${transformTitle(anime.title.userPreferred)}-${episode}`,
 			imageURI: anime.coverImage.extraLarge,
